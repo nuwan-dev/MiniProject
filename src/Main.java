@@ -1,18 +1,27 @@
 import java.util.Scanner;
 import java.util.Random;
-import java.util.ArrayList;
 
 public class Main {
+    public static String shuffleStringFisherYates(String str) {
+        char[] chars = str.toCharArray();
+        Random random = new Random();
+        for (int i = chars.length - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            char temp = chars[i];
+            chars[i] = chars[j];
+            chars[j] = temp;
+        }
+        return new String(chars);
+    }
     public static void main(String[] args) {
-//        variables
         Scanner inputScanner = new Scanner(System.in);
-        Random randomGenarator = new Random();
+        Random randomGenerator = new Random();
         String[] passwordSymbols = {"!", "@", "#", "$", "%", "^", "&", "*"};
         int[] passwordNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
         String[] passwordCharacters = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
         String[] passwordUpperCases = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         String symbolTest, passwordSymbol = "", passwordNumber = "", passwordChar = "", passwordUpperCase = "", finalPassword = "";
-        int numOfChar, randomSymbol, randomNum, randomChar, randomUpper;
+        int randomSymbol, randomNum, randomChar, randomUpper;
         System.out.println("<!-----------------------------------------!>");
         System.out.println("\t\tWELCOME TO PASSWORD GENERATOR");
         System.out.println("<!-----------------------------------------!>");
@@ -22,13 +31,13 @@ public class Main {
             if (symbolTest.equalsIgnoreCase("y")) {
                 for (int x = 1; x <= 2; x++) {
                     for (int i = 1; i <= 2; i++) {
-                        randomSymbol = randomGenarator.nextInt(passwordSymbols.length);
+                        randomSymbol = randomGenerator.nextInt(passwordSymbols.length);
                         passwordSymbol += passwordSymbols[randomSymbol];
-                        randomNum = randomGenarator.nextInt(passwordNumbers.length);
+                        randomNum = randomGenerator.nextInt(passwordNumbers.length);
                         passwordNumber += passwordNumbers[randomNum];
-                        randomChar = randomGenarator.nextInt(passwordCharacters.length);
+                        randomChar = randomGenerator.nextInt(passwordCharacters.length);
                         passwordChar += passwordCharacters[randomChar];
-                        randomUpper = randomGenarator.nextInt(passwordUpperCases.length);
+                        randomUpper = randomGenerator.nextInt(passwordUpperCases.length);
                         passwordUpperCase += passwordUpperCases[randomUpper];
                     }
                 }
@@ -36,7 +45,9 @@ public class Main {
             } else if (symbolTest.equalsIgnoreCase("n")) {
                 System.out.print("Good bye!");
             }
-            System.out.println(finalPassword);
+            String shuffledString = shuffleStringFisherYates(finalPassword);
+            System.out.println("Non shuffled password : " + finalPassword);
+            System.out.println("Shuffled password : " + shuffledString);
         } else {
             System.out.println("Invalid input! Try again with Y or N");
         }
